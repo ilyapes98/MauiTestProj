@@ -12,7 +12,15 @@
     </ContentPage.Resources>
 
     <VerticalStackLayout Padding="20" Spacing="15">
+        <Label FontAttributes="Bold" Text="Offer Value" />
+
+        <Entry
+            Keyboard="Numeric"
+            Placeholder="Enter amount (e.g. 10.50)"
+            Text="{Binding OfferValue}" />
+
         <Label FontAttributes="Bold" Text="Offer Type" />
+
         <RadioButton
             Content="Percentage Discount"
             GroupName="OfferTypeGroup"

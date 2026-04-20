@@ -2,6 +2,6 @@
 
 public enum OfferPopupResult 
 { 
-    Dismissed, 
-    Accepted 
+    Dismissed = 0, 
+    Accepted = 1
 }

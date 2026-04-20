@@ -16,11 +16,22 @@
             HorizontalOptions="Center"
             Text="{Binding Title}"
             TextColor="{Binding TextColor}" />
-        <Label
-            FontSize="48"
+        <HorizontalStackLayout
+            BackgroundColor="{Binding BackgroundColor}"
             HorizontalOptions="Center"
-            Text="{Binding Symbol}"
-            TextColor="{Binding TextColor}" />
+            Spacing="4">
+            <Label
+                FontSize="24"
+                Text="{Binding OfferValue}"
+                TextColor="{Binding TextColor}"
+                VerticalOptions="Center" />
+            <Label
+                FontSize="24"
+                Text="{Binding Symbol}"
+                TextColor="{Binding TextColor}"
+                VerticalOptions="Center" />
+        </HorizontalStackLayout>
+
         <Image
             HeightRequest="120"
             HorizontalOptions="Center"

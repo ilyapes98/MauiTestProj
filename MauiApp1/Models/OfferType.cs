@@ -2,6 +2,6 @@
 
 public enum OfferType
 {
-    Percentage,
-    Fixed
+    Percentage = 0,
+    Fixed = 1
 }

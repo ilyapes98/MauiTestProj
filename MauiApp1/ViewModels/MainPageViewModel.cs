@@ -10,16 +10,15 @@ namespace MauiApp1.ViewModels;
 
 public partial class MainPageViewModel : ObservableObject
 {
-    private readonly IPopupService popupService;
     private readonly IServiceProvider _serviceProvider;
-    public MainPageViewModel(IPopupService PopupService, IServiceProvider serviceProvider)
+    public MainPageViewModel(IServiceProvider serviceProvider)
     {
-        popupService = PopupService;
         _serviceProvider = serviceProvider;
 
         headerText   = Preferences.Get(PreferenceKeys.HeaderText, string.Empty);
         showIcon     = Preferences.Get(PreferenceKeys.ShowIcon, false);
         isPercentage = Preferences.Get(PreferenceKeys.IsPercentage, true);
+        offerValue   = decimal.Parse(Preferences.Get(PreferenceKeys.OfferValue, "0"));
 
         var themeName = Preferences.Get(PreferenceKeys.SelectedTheme, nameof(OfferTheme.Light));
         selectedTheme = Enum.TryParse<OfferTheme>(themeName, out var theme)
@@ -31,12 +30,12 @@ public partial class MainPageViewModel : ObservableObject
     [ObservableProperty] private OfferTheme selectedTheme = OfferTheme.Light;
     [ObservableProperty] private bool showIcon;
     [ObservableProperty] private bool isPercentage = true;
-
+    [ObservableProperty] private decimal offerValue;
     partial void OnHeaderTextChanged(string value) => Preferences.Set(PreferenceKeys.HeaderText, value);
     partial void OnShowIconChanged(bool value) => Preferences.Set(PreferenceKeys.ShowIcon, value);
     partial void OnIsPercentageChanged(bool value) => Preferences.Set(PreferenceKeys.IsPercentage, value);
     partial void OnSelectedThemeChanged(OfferTheme value) => Preferences.Set(PreferenceKeys.SelectedTheme, value.ToString());
-
+    partial void OnOfferValueChanged(decimal value) => Preferences.Set(PreferenceKeys.OfferValue, value.ToString());
     public OfferTheme[] Themes { get; } = Enum.GetValues<OfferTheme>();
     [RelayCommand]
     private async Task PreviewAsync()
@@ -49,13 +48,20 @@ public partial class MainPageViewModel : ObservableObject
                 Title: HeaderText,
                 Theme: SelectedTheme,
                 ShowIcon: ShowIcon,
-                Type: IsPercentage ? OfferType.Percentage : OfferType.Fixed);
+                Type: IsPercentage ? OfferType.Percentage : OfferType.Fixed,
+                Value: OfferValue);
 
             popupVm.Configure(config);
 
             var popup = new OfferPopup(popupVm);
 
             var result = await Shell.Current.ShowPopupAsync<OfferPopupResult>(popup);
+
+            if (result.WasDismissedByTappingOutsideOfPopup)
+            {
+                await Shell.Current.DisplayAlertAsync("Dismissed", "User dismissed the offer.", "OK");
+                return;
+            }
 
             if (result.Result == OfferPopupResult.Accepted)
             {

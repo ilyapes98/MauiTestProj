@@ -2,6 +2,6 @@
 
 public enum OfferTheme
 {
-    Dark,
-    Light
+    Light = 0,
+    Dark = 1
 }

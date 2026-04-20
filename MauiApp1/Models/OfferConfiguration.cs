@@ -4,5 +4,6 @@ public sealed record OfferConfiguration(
     string Title,
     OfferTheme Theme,
     bool ShowIcon,
-    OfferType Type
+    OfferType Type,
+    decimal Value
 );

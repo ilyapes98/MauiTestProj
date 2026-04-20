@@ -9,6 +9,7 @@ public partial class OfferPopupViewModel : ObservableObject
 {
     [ObservableProperty] private string title = string.Empty;
     [ObservableProperty] private string symbol = string.Empty;
+    [ObservableProperty] private string offerValue = string.Empty;
     [ObservableProperty] private bool showIcon;
     [ObservableProperty] private Color backgroundColor = Colors.White;
     [ObservableProperty] private Color textColor = Colors.Black;
@@ -20,6 +21,7 @@ public partial class OfferPopupViewModel : ObservableObject
         Title = config.Title;
         ShowIcon = config.ShowIcon;
         Symbol = config.Type == OfferType.Percentage ? "%" : "$";
+        OfferValue = config.Value.ToString("F2");
 
         if (config.Theme == OfferTheme.Dark)
         {
