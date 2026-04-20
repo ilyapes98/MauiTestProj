@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MauiApp1.Constants;
 using MauiApp1.Models;
-using Microsoft.Maui.Graphics.Text;
 
 namespace MauiApp1.ViewModels;
 
@@ -20,10 +20,15 @@ public partial class OfferPopupViewModel : ObservableObject
     {
         Title = config.Title;
         ShowIcon = config.ShowIcon;
-        Symbol = config.Type == OfferType.Percentage ? "%" : "$";
+        Symbol = config.Type == OfferType.Percentage ? TypeConstant.PercentSymbol : TypeConstant.FixedSymbol;
         OfferValue = config.Value.ToString("F2");
 
-        if (config.Theme == OfferTheme.Dark)
+        ConfigureTheme(config.Theme);
+    }
+
+    private void ConfigureTheme(OfferTheme theme)
+    {
+        if (theme == OfferTheme.Dark)
         {
             BackgroundColor = Colors.Black;
             TextColor = Colors.White;
@@ -36,5 +41,7 @@ public partial class OfferPopupViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void Claim() => CloseRequested?.Invoke(OfferPopupResult.Accepted);
+    private void Claim() => CloseRequested?.Invoke(OfferPopupResult.Accepted); 
+    [RelayCommand]
+    private void Cancel() => CloseRequested?.Invoke(OfferPopupResult.Dismissed);
 }

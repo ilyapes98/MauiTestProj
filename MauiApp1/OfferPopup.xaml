@@ -37,10 +37,23 @@
             HorizontalOptions="Center"
             IsVisible="{Binding ShowIcon}"
             Source="dotnet_bot.png" />
-        <Button
-            Command="{Binding ClaimCommand}"
+        <HorizontalStackLayout
+            BackgroundColor="{Binding BackgroundColor}"
             HorizontalOptions="Center"
-            Text="Claim Offer" />
+            Spacing="8">
+
+            <Button
+                BackgroundColor="Red"
+                Command="{Binding CancelCommand}"
+                HorizontalOptions="Center"
+                Text="Cancel" />
+
+            <Button
+                Command="{Binding ClaimCommand}"
+                HorizontalOptions="Center"
+                Text="Claim Offer" />
+
+        </HorizontalStackLayout>
     </VerticalStackLayout>
 
 </toolkit:Popup>

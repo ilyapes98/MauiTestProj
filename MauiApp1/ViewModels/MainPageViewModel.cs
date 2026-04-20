@@ -1,10 +1,8 @@
-﻿using CommunityToolkit.Maui;
-using CommunityToolkit.Maui.Extensions;
+﻿using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiApp1.Constants;
 using MauiApp1.Models;
-using Microsoft.Maui.Storage;
 
 namespace MauiApp1.ViewModels;
 
@@ -57,7 +55,7 @@ public partial class MainPageViewModel : ObservableObject
 
             var result = await Shell.Current.ShowPopupAsync<OfferPopupResult>(popup);
 
-            if (result.WasDismissedByTappingOutsideOfPopup)
+            if (result.WasDismissedByTappingOutsideOfPopup || result.Result == OfferPopupResult.Dismissed)
             {
                 await Shell.Current.DisplayAlertAsync("Dismissed", "User dismissed the offer.", "OK");
                 return;
