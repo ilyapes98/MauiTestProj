@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiApp1.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:conv="clr-namespace:MauiApp1.Converters"
+    xmlns:vm="clr-namespace:MauiApp1.ViewModels"
+    x:DataType="vm:MainPageViewModel">
+
+    <ContentPage.Resources>
+        <conv:InverseBoolConverter x:Key="InverseBool" />
+    </ContentPage.Resources>
+
+    <VerticalStackLayout Padding="20" Spacing="15">
+        <Label FontAttributes="Bold" Text="Offer Value" />
+
+        <Entry
+            Keyboard="Numeric"
+            Placeholder="Enter amount (e.g. 10.50)"
+            Text="{Binding OfferValue}" />
+
+        <Label FontAttributes="Bold" Text="Offer Type" />
+
+        <RadioButton
+            Content="Percentage Discount"
+            GroupName="OfferTypeGroup"
+            IsChecked="{Binding IsPercentage}" />
+        <RadioButton
+            Content="Fixed Amount"
+            GroupName="OfferTypeGroup"
+            IsChecked="{Binding IsPercentage, Converter={StaticResource InverseBool}}" />
+
+        <Label FontAttributes="Bold" Text="Header Text" />
+        <Entry Placeholder="Enter promotion title..." Text="{Binding HeaderText}" />
+
+        <Label FontAttributes="Bold" Text="Visual Theme" />
+        <Picker
+            Title="Select theme"
+            ItemsSource="{Binding Themes}"
+            SelectedItem="{Binding SelectedTheme}" />
+
+        <HorizontalStackLayout Spacing="10">
+            <Label Text="Show Gift Icon?" VerticalOptions="Center" />
+            <Switch IsToggled="{Binding ShowIcon}" />
+        </HorizontalStackLayout>
+
+        <Button Command="{Binding PreviewCommand}" Text="Preview Offer" />
+    </VerticalStackLayout>
+
+</ContentPage>
